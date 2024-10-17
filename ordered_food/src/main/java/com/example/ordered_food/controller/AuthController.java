@@ -3,10 +3,12 @@ package com.example.ordered_food.controller;
 
 import com.example.ordered_food.config.JwtProvider;
 import com.example.ordered_food.exception.UserException;
+import com.example.ordered_food.model.Cart;
 import com.example.ordered_food.model.User;
 import com.example.ordered_food.repository.UserRepository;
 import com.example.ordered_food.request.LoginUser;
 import com.example.ordered_food.response.AuthResponse;
+import com.example.ordered_food.service.cart.CartService;
 import com.example.ordered_food.service.user.CustomUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,9 @@ public class AuthController {
 
     @Autowired
     private CustomUserServiceImpl customUserService;
+
+    @Autowired
+    private CartService cartService;
 
     public AuthController(UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder passwordEncoder, CustomUserServiceImpl customUserService) {
         this.userRepository = userRepository;
@@ -66,6 +71,7 @@ public class AuthController {
         createdUser.setLastName(lastName);
 
         User saveUser = userRepository.save(createdUser);
+        Cart cart = cartService.createCart(saveUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(saveUser.getEmail(),saveUser.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);

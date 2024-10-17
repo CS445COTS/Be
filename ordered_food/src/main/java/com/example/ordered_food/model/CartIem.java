@@ -25,20 +25,31 @@ public class CartIem {
 
     private  Integer discountedPrice;
 
+    private  Long userId ;
+
     public CartIem() {
     }
 
-    public CartIem(Long id, Cart cart, Product product, int quantity, Integer price, Integer discountedPrice) {
+    public CartIem(Long id, Cart cart, Product product, int quantity, Integer price, Integer discountedPrice,Long userId) {
         this.id = id;
         this.cart = cart;
         this.product = product;
         this.quantity = quantity;
         this.price = price;
         this.discountedPrice = discountedPrice;
+        this.userId = userId;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setId(Long id) {

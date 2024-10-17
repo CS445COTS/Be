@@ -14,12 +14,14 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
 
 
-    @Query(value = "select  p from  Product p " +
-            "where (p.category.name = :category OR  :category='') and ((:minPrice is null and :maxPrice is null) " +
-            "or (p.price BETWEEN  :minPrice and :maxPrice)) " +
-            " order by  " +
-            "case  when  :sort = 'price_low' then p.price END  desc ," +
-            "case when  :sort = 'price_high' then p.price END  asc ")
+    @Query(value = "select p from Product p " +
+            "where (:category IS NULL OR :category = '' OR p.category.name = :category) " +
+            "and ((:minPrice IS NULL AND :maxPrice IS NULL) " +
+            "OR (p.price BETWEEN :minPrice AND :maxPrice)) " +
+            "order by " +
+            "case when :sort = 'price_low' then p.price end DESC, " +
+            "case when :sort = 'price_high' then p.price end ASC")
+
     List<Product> filterProducts(@Param("category") String category,
                                  @Param("minPrice") Integer minPrice,
                                  @Param("maxPrice") Integer maxPrice,

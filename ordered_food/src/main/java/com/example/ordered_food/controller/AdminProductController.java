@@ -1,6 +1,7 @@
 package com.example.ordered_food.controller;
 
 
+import com.example.ordered_food.exception.ProductException;
 import com.example.ordered_food.model.Product;
 import com.example.ordered_food.request.CreateProductRequest;
 import com.example.ordered_food.response.ApiResponse;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/products")
@@ -34,5 +37,12 @@ public class AdminProductController {
         response.setStatus(true);
         return  new ResponseEntity<>(response,HttpStatus.CREATED);
     }
+
+    @GetMapping("/all")
+    public  ResponseEntity <List<Product>> findAllProducts() throws ProductException{
+        List<Product> products = productService.findAllProducts();
+        return  new ResponseEntity<List<Product>>(products,HttpStatus.OK);
+    }
+
 
 }

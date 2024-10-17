@@ -46,8 +46,8 @@ public class ProductServiceImlp implements  ProductService{
         product.setPrice(productRequest.getPrice());
         product.setImageUrl(productRequest.getImageUrl());
         product.setQuantity(productRequest.getQuantity());
-        product.setDiscountedPrice(product.getDiscountedPrice());
-        product.setDiscountPercent(product.getDiscountPercent());
+        product.setDiscountedPrice(productRequest.getDiscountedPrice());
+        product.setDiscountPercent(productRequest.getDiscountPercent());
         product.setCategory(category);
         product.setCreateAt(LocalDateTime.now());
         Product saveProduct = productRepository.save(product);
